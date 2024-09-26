@@ -14,10 +14,9 @@ public class SalvarCliente {
         this.clienteRepository = clienteRepository;
     }
 
-    public Cliente execute(String nome, String cpf, String email) {
-        Cliente cliente = new Cliente(UUID.randomUUID(), nome, cpf, email, Instant.now());
-        cliente = this.clienteRepository.saveCliente(cliente);
-        return cliente;
+    public Cliente execute(UUID clienteID, String nome, String cpf, String email) {
+        Cliente cliente = new Cliente(clienteID, nome, cpf, email, Instant.now());
+        return this.clienteRepository.saveCliente(cliente);
     }
 
 }

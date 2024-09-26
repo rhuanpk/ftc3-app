@@ -29,9 +29,9 @@ public class ClienteController {
         return ClientePresenter.toObject(cliente);
     }
 
-    public Object salvar(String nome, String cpf, String email) {
+    public Object salvar(UUID clienteID, String nome, String cpf, String email) {
         SalvarCliente salvarCliente = new SalvarCliente(this.clienteRepository);
-        Cliente cliente = salvarCliente.execute(nome, cpf, email);
+        Cliente cliente = salvarCliente.execute(clienteID, nome, cpf, email);
         return ClientePresenter.toObject(cliente);
     }
 

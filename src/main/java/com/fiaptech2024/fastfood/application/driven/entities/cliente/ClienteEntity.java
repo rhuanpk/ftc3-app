@@ -24,7 +24,6 @@ import org.hibernate.annotations.CreationTimestamp;
 public class ClienteEntity {
 
     @Id
-    @GeneratedValue
     private UUID id;
 
     private String nome;

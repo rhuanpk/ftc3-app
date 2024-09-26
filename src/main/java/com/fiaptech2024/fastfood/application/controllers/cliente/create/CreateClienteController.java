@@ -23,9 +23,9 @@ public class CreateClienteController {
     @PostMapping
     @Operation(tags = "Clientes")
     public ResponseEntity<Object> create(@RequestBody ClienteCreateRequest request) {
-        authenticationService.authenticate(request.nome(), request.cpf(), request.email());
+        UUID clienteID = UUID.fromString(authenticationService.authenticate(request.nome(), request.cpf(), request.email()));
         ClienteController clienteController = new ClienteController(this.clienteRepositoryInterface);
-        return new ResponseEntity<>(clienteController.salvar(request.nome(), request.cpf(), request.email()), HttpStatus.OK);
+        return new ResponseEntity<>(clienteController.salvar(clienteID, request.nome(), request.cpf(), request.email()), HttpStatus.OK);
     }
 
 }
