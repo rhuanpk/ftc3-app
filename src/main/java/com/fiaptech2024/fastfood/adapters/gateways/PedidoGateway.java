@@ -1,5 +1,6 @@
 package com.fiaptech2024.fastfood.adapters.gateways;
 
+import com.fiaptech2024.fastfood.application.driven.entities.cliente.ClienteEntity;
 import com.fiaptech2024.fastfood.application.driven.entities.pedido.PedidoEntity;
 import com.fiaptech2024.fastfood.application.driven.entities.pedido.PedidoItemEntity;
 import com.fiaptech2024.fastfood.application.driven.entities.produto.ProdutoEntity;
@@ -31,13 +32,15 @@ public class PedidoGateway implements PedidoRepositoryInterace {
     @Override
     public Pedido criarPedido(Pedido pedido) {
 
+        ClienteEntity clienteEntity = new ClienteEntity();
+        clienteEntity.setId(pedido.getClienteId());
+
         PedidoEntity pedidoEntity = new PedidoEntity();
         pedidoEntity.setId(pedido.getId());
         pedidoEntity.setStatusPedido(pedido.getStatusPedido());
         pedidoEntity.setStatusPagamento(pedido.getStatusPagamento());
         pedidoEntity.setPreco(pedido.getValor());
-        pedidoEntity.setClienteId(pedido.getClienteId());
-        pedidoEntity.setDataCriacao(pedido.getDataCriacao());
+        pedidoEntity.setCliente(clienteEntity);
         this.pedidoRepository.save(pedidoEntity);
 
         for (PedidoItem pedidoItem : pedido.getItems()) {
@@ -80,7 +83,10 @@ public class PedidoGateway implements PedidoRepositoryInterace {
         pedidoEntity.setStatusPedido(pedido.getStatusPedido());
         pedidoEntity.setStatusPagamento(pedido.getStatusPagamento());
         pedidoEntity.setPreco(pedido.getValor());
-        pedidoEntity.setClienteId(pedido.getClienteId());
+
+        ClienteEntity clienteEntity = new ClienteEntity();
+        clienteEntity.setId(pedido.getClienteId());
+        pedidoEntity.setCliente(clienteEntity);
 
         List<PedidoItemEntity> pedidoItemEntities = new ArrayList<>();
         for (PedidoItem pedidoItem : pedido.getItems()) {
@@ -109,7 +115,7 @@ public class PedidoGateway implements PedidoRepositoryInterace {
     private Pedido dtoToEntidade(PedidoEntity pedidoEntity) {
         Pedido pedido = new Pedido(
                 pedidoEntity.getId(),
-                pedidoEntity.getClienteId(),
+                pedidoEntity.getCliente().getId(),
                 pedidoEntity.getStatusPedido(),
                 pedidoEntity.getStatusPagamento(),
                 pedidoEntity.getDataCriacao()

@@ -1,14 +1,15 @@
 package com.fiaptech2024.fastfood.adapters.controllers;
 
 import com.fiaptech2024.fastfood.adapters.presenters.PedidoPresenter;
+import com.fiaptech2024.fastfood.core.applications.cliente.repositories.ClienteRepositoryInterface;
 import com.fiaptech2024.fastfood.core.applications.pedido.repositories.PedidoRepositoryInterace;
 import com.fiaptech2024.fastfood.core.applications.pedido.usecases.*;
 import com.fiaptech2024.fastfood.core.applications.pedido.usecases.criarPedido.CriarPedido;
 import com.fiaptech2024.fastfood.core.applications.pedido.usecases.criarPedido.CriarPedidoInput;
 import com.fiaptech2024.fastfood.core.applications.produto.repositories.ProdutoRepositoryInterface;
 import com.fiaptech2024.fastfood.core.domain.pedido.Pedido;
-import com.fiaptech2024.fastfood.core.domain.pedido.enums.StatusPagamento;
 import com.fiaptech2024.fastfood.core.domain.pedido.enums.StatusPedido;
+import com.fiaptech2024.fastfood.core.domain.pedido.enums.StatusPagamento;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,10 +17,12 @@ import java.util.UUID;
 public class PedidoController {
 
     private final PedidoRepositoryInterace pedidoRepository;
+    private final ClienteRepositoryInterface clienteRepository;
     private final ProdutoRepositoryInterface produtoRepository;
 
-    public PedidoController(PedidoRepositoryInterace pedidoRepository, ProdutoRepositoryInterface produtoRepository) {
+    public PedidoController(PedidoRepositoryInterace pedidoRepository, ClienteRepositoryInterface clienteRepository, ProdutoRepositoryInterface produtoRepository) {
         this.pedidoRepository = pedidoRepository;
+        this.clienteRepository = clienteRepository;
         this.produtoRepository = produtoRepository;
     }
 
@@ -36,7 +39,7 @@ public class PedidoController {
     }
 
     public Object criarPedido(CriarPedidoInput input) {
-        CriarPedido criarPedido = new CriarPedido(this.pedidoRepository, this.produtoRepository);
+        CriarPedido criarPedido = new CriarPedido(this.pedidoRepository, this.clienteRepository, this.produtoRepository);
         return PedidoPresenter.toObject(criarPedido.execute(input));
     }
 

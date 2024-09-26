@@ -3,6 +3,7 @@ package com.fiaptech2024.fastfood.application.controllers.pedido.create;
 import com.fiaptech2024.fastfood.adapters.controllers.PedidoController;
 import com.fiaptech2024.fastfood.application.controllers.pedido.create.requests.PedidoCreateItemRequest;
 import com.fiaptech2024.fastfood.application.controllers.pedido.create.requests.PedidoCreateRequest;
+import com.fiaptech2024.fastfood.core.applications.cliente.repositories.ClienteRepositoryInterface;
 import com.fiaptech2024.fastfood.core.applications.pedido.repositories.PedidoRepositoryInterace;
 import com.fiaptech2024.fastfood.core.applications.pedido.usecases.criarPedido.CriarPedidoInput;
 import com.fiaptech2024.fastfood.core.applications.pedido.usecases.criarPedido.CriarPedidoItemInput;
@@ -25,12 +26,13 @@ import java.util.List;
 public class CreatePedidoController {
 
     private final PedidoRepositoryInterace pedidoRepositoryInterace;
+    private final ClienteRepositoryInterface clienteRepositoryInterface;
     private final ProdutoRepositoryInterface produtoRepositoryInterface;
 
     @PostMapping
     @Operation(tags = "Pedidos")
     public ResponseEntity<Object> create(@RequestBody PedidoCreateRequest request) {
-        PedidoController pedidoController = new PedidoController(this.pedidoRepositoryInterace, this.produtoRepositoryInterface);
+        PedidoController pedidoController = new PedidoController(this.pedidoRepositoryInterace, this.clienteRepositoryInterface, this.produtoRepositoryInterface);
         List<CriarPedidoItemInput> inputItens = new ArrayList<>();
         for (PedidoCreateItemRequest itemPedido : request.items()) {
             inputItens.add(new CriarPedidoItemInput(itemPedido.item_id(), itemPedido.quantidade()));
