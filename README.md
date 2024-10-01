@@ -65,3 +65,4 @@ Visando atender o requisito de negócio de alta disponibilidade e escalabilidade
 -  [@Diógenes Viana](https://github.com/diogenesviana)
 -  [@Filipe Borba](https://www.github.com/filipexxborba)
 -  [@Rhuan Patriky](https://github.com/rhuanpk)
+
